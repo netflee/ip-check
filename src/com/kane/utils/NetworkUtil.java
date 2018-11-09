@@ -66,7 +66,7 @@ public final class NetworkUtil {
     /**
      * 检查传入IP有效性
      * @param ip
-     * @return
+     * @return boolean值
      */
     private final static boolean ipIsUnknown(String ip){
         boolean isUnknown = false;
