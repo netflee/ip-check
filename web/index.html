@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Main page</title>
+
+    <script type="text/javascript">
+    function getXMLHttpRequest() {
+        var xmlRequest;
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        if (window.XMLHttpRequest) {
+            xmlRequest = new XMLHttpRequest();
+        } else {
+            xmlRequest = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        return xmlRequest;
+    }
+
+    function detectsUserIP() {
+        var xmlRequest = getXMLHttpRequest();
+        xmlRequest.open("POST", "http://127.0.0.1:8080/ip", true);
+        xmlRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlRequest.send();
+        xmlRequest.onreadystatechange = function() {
+            console.log(xmlRequest.readyState);
+            if (xmlRequest.readyState == 4 && xmlRequest.status == 200) {
+                console.log(xmlRequest.responseText);
+                var resJson = JSON.parse(xmlRequest.responseText);
+                var ip  = resJson.query;
+                var isp = resJson.isp;
+                document.getElementById("ipInfoDiv").innerHTML=ip;
+                document.getElementById("ispInfoDiv").innerHTML=isp;
+            }
+        }
+    }
+    </script>
+
+
+</head>
+<body onload="detectsUserIP()">
+<br>
+Your IP:
+<div id="ipInfoDiv"></div>
+<br>
+Your ISP:
+<div id="ispInfoDiv"></div>
+</body>
+</html>
